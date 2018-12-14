@@ -38,9 +38,10 @@ def main_tf(variables):
 
 module "project-factory" {
   source = "modules/core_project_factory"
+
 """
 
-    for varname in variables:
+    for varname in sorted(variables):
         buf += '%s = "${var.%s}"\n' % (varname, varname)
 
     buf += "}\n"
@@ -59,17 +60,18 @@ def outputs_tf(outputs):
     Returns:
         str: The contents of `outputs.tf`
     """
-    buf = boilerplate()
-    buf += "\n\n"
 
-    for name, attrs in outputs.iteritems():
-        desc = attrs.get("desc", None)
+    buf = boilerplate()
+
+    buf += "\n\n"
+    for name in sorted(outputs):
+        desc = outputs[name].get("description", None)
 
         buf += 'output \"%s\" {\n' % name
         buf += 'value = "${module.project-factory.%s}"\n' % name
 
         if desc:
-            buf += 'description = "{0}"\n' % desc
+            buf += 'description = "{desc}"\n'.format(desc=desc)
 
         buf += "}\n"
 
@@ -88,10 +90,10 @@ def main(argv):
         # Copy `variables.tf` without modification
         fh.write(variables_text)
 
-    with open("main.tf", "w") as fh:
+    with open("./main.tf", "w") as fh:
         fh.write(main_tf(variables))
 
-    with open("outputs.tf", "w") as fh:
+    with open("./outputs.tf", "w") as fh:
         fh.write(outputs_tf(outputs))
 
     subprocess.call(["terraform", "fmt"])
