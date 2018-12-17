@@ -41,8 +41,8 @@ module "project-factory" {
 
 """
 
-    for varname in sorted(variables):
-        buf += '%s = "${var.%s}"\n' % (varname, varname)
+    for name in sorted(variables):
+        buf += '{name} = "${{var.{name}}}"\n'.format(name=name)
 
     buf += "}\n"
 
@@ -67,8 +67,9 @@ def outputs_tf(outputs):
     for name in sorted(outputs):
         desc = outputs[name].get("description", None)
 
-        buf += 'output \"%s\" {\n' % name
-        buf += 'value = "${module.project-factory.%s}"\n' % name
+        buf += 'output "{name}" {{\n'.format(name=name)
+        buf += 'value = "${{module.project-factory.{name}}}"\n' \
+            .format(name=name)
 
         if desc:
             buf += 'description = "{desc}"\n'.format(desc=desc)
