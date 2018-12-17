@@ -27,7 +27,7 @@ DOCKER_IMAGE_KITCHEN_TERRAFORM := cftk/kitchen_terraform
 DOCKER_TAG_KITCHEN_TERRAFORM ?= ${BUILD_TERRAFORM_VERSION}_${BUILD_CLOUD_SDK_VERSION}_${BUILD_PROVIDER_GOOGLE_VERSION}_${BUILD_PROVIDER_GSUITE_VERSION}
 
 
-all: check_shell check_python check_golang check_terraform check_docker check_base_files test_check_headers check_headers check_trailing_whitespace generate_docs ## Run all linters and update documentation
+all: check_shell check_python check_golang check_terraform check_docker check_base_files test_check_headers check_headers check_trailing_whitespace test_helpers generate_docs ## Run all linters and update documentation
 
 # The .PHONY directive tells make that this isn't a real target and so
 # the presence of a file named 'check_shell' won't cause this target to stop
@@ -74,6 +74,10 @@ check_headers: ## Check that source files have appropriate boilerplate
 	@echo "Checking file headers"
 	@python test/verify_boilerplate.py
 
+.PHONY: test_heleprs
+test_helpers: ## Run tests for all helper scripts
+	./test/helpers/generate_root_module/test_generate_root_module.py
+
 # Integration tests
 .PHONY: test_integration
 test_integration: ## Run integration tests
@@ -83,10 +87,6 @@ test_integration: ## Run integration tests
 	bundle exec kitchen converge
 	bundle exec kitchen verify
 	bundle exec kitchen destroy
-
-.PHONY: test_helpers
-test_helpers:
-	@./test/helpers/test_generate_root_module.py
 
 .PHONY: generate_docs
 generate_docs: ## Update README documentation for Terraform variables and outputs
