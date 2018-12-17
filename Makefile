@@ -158,5 +158,5 @@ help: ## Prints help for targets with comments
 	@grep -E '^[a-zA-Z._-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: generate
-generate:
+generate: ## Generate the root module based on core_project_factory
 	@./helpers/generate_root_module/generate_root_module.py
