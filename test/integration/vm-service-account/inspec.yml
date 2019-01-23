@@ -1,0 +1,5 @@
+name: vm-service-account
+attributes:
+  - name: bucket
+    type: string
+    required: true

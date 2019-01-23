@@ -1,0 +1,6 @@
+name = "pf-test-int-vm-sa"
+random_project_id = "true"
+org_id = "${org_id}"
+organization_id = "${org_id}"
+billing_account = "${billing_account}"
+credentials_path = "${credentials_path}"

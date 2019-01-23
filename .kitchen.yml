@@ -38,3 +38,25 @@ suites:
       name: terraform
       command_timeout: 1800
       root_module_directory: test/fixtures/minimal
+
+  - name: vm-service-account
+    driver:
+      name: terraform
+      command_timeout: 1800
+      root_module_directory: test/fixtures/vm-service-account
+    verifier:
+      name: terraform
+      systems:
+        #- name: vm-service-account
+        #  backend: gcp
+        #  shell: true
+        #  controls:
+        #    - gcloud
+        - name: jenkins
+          backend: ssh
+          controls:
+            - credentials_path
+          hosts_output: instance_ip
+          key_files:
+            - ./test/fixtures/vm-service-account/ssh/key
+          user: terraform
