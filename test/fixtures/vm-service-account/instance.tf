@@ -57,6 +57,12 @@ resource "google_compute_instance" "main" {
     email  = "${var.service_account_email}"
     scopes = ["cloud-platform"]
   }
+
+  depends_on = [
+    "google_storage_bucket_object.project-factory-tar",
+    "google_storage_bucket_object.terraform-tfvars",
+    "google_storage_bucket_object.credentials",
+  ]
 }
 
 resource "null_resource" "wait_for_jenkins_configuration" {

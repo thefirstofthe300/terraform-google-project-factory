@@ -21,7 +21,7 @@ set -u
 PROJECT=$1
 ZONE=$2
 INSTANCE_NAME=$3
-COMMAND="ls /etc/profile.d/environment.sh"
+COMMAND="ls /tmp/setup_complete"
 
 echo "Waiting for instance ${INSTANCE_NAME} in project ${PROJECT} to complete..."
 

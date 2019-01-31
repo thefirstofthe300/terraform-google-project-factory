@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-bucket = attribute("bucket")
-
 control "credentials_path" do
-  preamble = "source /etc/profile.d/environment.sh && cd #{bucket}/project-factory/examples/simple_project"
+  preamble = "source /etc/profile.d/environment.sh && cd project-factory/examples/simple_project"
 
   describe bash("#{preamble} && terraform init -no-color") do
     its('exit_status') { should eq 0 }

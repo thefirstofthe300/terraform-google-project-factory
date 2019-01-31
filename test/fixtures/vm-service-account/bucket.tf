@@ -22,7 +22,7 @@ resource "google_storage_bucket" "main" {
 
 resource "null_resource" "archive" {
   provisioner "local-exec" {
-    command = "git archive -o ${local.project_factory_archive} --prefix project-factory/ HEAD"
+    command     = "git archive -o ${local.project_factory_archive} --prefix project-factory/ HEAD"
     working_dir = "${path.module}/../../.."
   }
 
@@ -32,9 +32,9 @@ resource "null_resource" "archive" {
 }
 
 resource "google_storage_bucket_object" "project-factory-tar" {
-  bucket  = "${google_storage_bucket.main.name}"
-  name    = "project-factory.tar"
-  source  = "${local.project_factory_archive}"
+  bucket = "${google_storage_bucket.main.name}"
+  name   = "project-factory.tar"
+  source = "${local.project_factory_archive}"
 
   depends_on = ["null_resource.archive"]
 }
@@ -50,13 +50,13 @@ data "template_file" "project-factory-tfvars" {
 }
 
 resource "google_storage_bucket_object" "terraform-tfvars" {
-  bucket = "${google_storage_bucket.main.name}"
+  bucket  = "${google_storage_bucket.main.name}"
   name    = "terraform.tfvars"
   content = "${data.template_file.project-factory-tfvars.rendered}"
 }
 
 resource "google_storage_bucket_object" "credentials" {
-  bucket = "${google_storage_bucket.main.name}"
+  bucket  = "${google_storage_bucket.main.name}"
   name    = "credentials.json"
   content = "${base64decode(google_service_account_key.main.private_key)}"
 }

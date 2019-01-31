@@ -18,14 +18,18 @@ set -e
 
 BUCKET="$(stdlib::metadata_get -k instance/attributes/bucket)"
 BASEDIR="$(readlink -f ~terraform)"
-PROJECT_FACTORY="$BASEDIR/$BUCKET/project-factory"
+PROJECT_FACTORY="$BASEDIR/project-factory"
 
-stdlib::debug "Fetching and unpacking Project Factory artifacts"
-stdlib::cmd gsutil cp -r "gs://$BUCKET/" "$BASEDIR"
-cd "$BASEDIR/$BUCKET" || exit 1
+cd "$BASEDIR" || exit 1
+
+stdlib::info "Fetching and unpacking Project Factory artifacts"
+stdlib::cmd gsutil cp -r "gs://$BUCKET/*" "$BASEDIR"
+
 stdlib::cmd tar -xf project-factory.tar
 cd project-factory || exit 1
 
-stdlib::debug "Installing Terraform and Project Factory dependencies"
+stdlib::info "Installing Terraform and Project Factory dependencies"
 stdlib::cmd sudo -u terraform -i "$PROJECT_FACTORY/helpers/init_debian.sh"
 stdlib::cmd chown -R terraform:terraform "$BASEDIR"
+
+stdlib::cmd touch /tmp/setup_complete
