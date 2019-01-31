@@ -32,5 +32,5 @@ variable "billing_account" {
 }
 
 variable "service_account_email" {
-  description = "The email address of a service account to attach to the vm-service-account instance"
+  description = "The email address of a service account to attach to the project-factory-credentials instance"
 }

@@ -25,11 +25,11 @@ resource "tls_private_key" "main" {
 
 resource "local_file" "gce-keypair-pk" {
   content  = "${tls_private_key.main.private_key_pem}"
-  filename = "${path.module}/ssh/key"
+  filename = "${path.module}/files/sshkey"
 }
 
 resource "google_compute_instance" "main" {
-  name         = "vm-service-account-${local.suffix}"
+  name         = "project-factory-credentials-${local.suffix}"
   machine_type = "n1-standard-1"
   zone         = "us-central1-a"
   project      = "${var.project_id}"

@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Wait for the vm-service-account instance to boot and install dependencies
+# Wait for the project-factory-credentials instance to boot and install dependencies
 
 set -u
 

@@ -39,19 +39,20 @@ suites:
       command_timeout: 1800
       root_module_directory: test/fixtures/minimal
 
-  - name: vm-service-account
+  - name: project-factory-credentials
     driver:
       name: terraform
       command_timeout: 1800
-      root_module_directory: test/fixtures/vm-service-account
+      root_module_directory: test/fixtures/project-factory-credentials
     verifier:
       name: terraform
       systems:
-        - name: vm-service-account
+        - name: project-factory-credentials
           backend: ssh
           controls:
             - credentials_path
+            - application_default_credentials
           hosts_output: instance_ip
           key_files:
-            - ./test/fixtures/vm-service-account/ssh/key
+            - ./test/fixtures/project-factory-credentials/files/sshkey
           user: terraform

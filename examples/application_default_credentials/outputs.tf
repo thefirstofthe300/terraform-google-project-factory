@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 1.20"
+output "project_id" {
+  value       = "${module.project-factory.project_id}"
+  description = "The ID of the created project"
 }
 
-provider "google-beta" {
-  #credentials = "${file(local.credentials_file_path)}"
-  version = "~> 1.20"
-}
-
-resource "random_id" "main" {
-  byte_length = 4
-}
-
-locals {
-  suffix                  = "${random_id.main.hex}"
-  project_factory_archive = "${path.module}/project-factory.tar"
-  remote_credentials_path = "../../../credentials.json"
-  terraform_user          = "terraform"
-}
-
-resource "google_service_account_key" "main" {
-  service_account_id = "projects/${var.project_id}/serviceAccounts/${var.service_account_email}"
+output "domain" {
+  value       = "${module.project-factory.domain}"
+  description = "The organization's domain"
 }

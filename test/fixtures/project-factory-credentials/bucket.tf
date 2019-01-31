@@ -16,7 +16,7 @@
 
 resource "google_storage_bucket" "main" {
   project       = "${var.project_id}"
-  name          = "vm-service-account-${local.suffix}"
+  name          = "project-factory-credentials-${local.suffix}"
   force_destroy = "true"
 }
 
