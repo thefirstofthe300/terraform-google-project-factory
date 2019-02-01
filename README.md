@@ -258,10 +258,11 @@ Integration tests are run though
 [kitchen-terraform](https://github.com/newcontext-oss/kitchen-terraform), and
 [InSpec](https://github.com/inspec/inspec).
 
-Two test-kitchen instances are defined:
+Three test-kitchen instances are defined:
 
 - `full-local` - Test coverage for all project-factory features.
 - `full-minimal` - Test coverage for a minimal set of project-factory features.
+- `project-factory-credentials` - Test coverage for using Project Factory with Application Default Credentials
 
 #### Setup
 
@@ -290,14 +291,23 @@ test steps non-interactively.
 
 #### Test configuration
 
-Each test-kitchen instance is configured with a `terraform.tfvars` file in the
-test fixture directory. For convenience, these are symlinked to a single shared file:
+Each `full` and `minimal` test-kitchen instances are configured with a
+`terraform.tfvars` file in the test fixture directory. For convenience, these
+are symlinked to a single shared file:
 
 ```sh
 cp "test/fixtures/shared/terraform.tfvars.example" \
-  "test/fixtures/shared/terraform.tfvars"
+   "test/fixtures/shared/terraform.tfvars"
 $EDITOR "test/fixtures/shared/terraform.tfvars"
-done
+```
+
+The `project-factory-credentials` test-kitchen instance has a separate
+configuration and must be configured separately:
+
+```sh
+cp "test/fixtures/project-factory-credentials/terraform.tfvars.example" \
+   "test/fixtures/project-factory-credentials/terraform.tfvars"
+$EDITOR "test/fixtures/project-factory-credentials/terraform.tfvars"
 ```
 
 Integration tests can be run within a pre-configured docker container. Tests can

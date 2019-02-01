@@ -32,5 +32,9 @@ variable "billing_account" {
 }
 
 variable "service_account_email" {
-  description = "The email address of a service account to attach to the project-factory-credentials instance"
+  description = <<EOD
+The email address of a service account to attach to the project-factory-credentials instance.
+This service account must be created in the project specified by `project_id`, be granted
+the `roles/editor` role on that project, and have all credentials needed by the Project Factory.
+EOD
 }
