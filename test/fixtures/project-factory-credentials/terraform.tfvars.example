@@ -1,0 +1,5 @@
+project_id = "pf-testfixture-0000"
+org_id = 000000000000
+billing_account = "000000-000000-000000"
+credentials_path = "../../../credentials.json"
+service_account_email = "project-factory-00000@pf-testfixture-0000.iam.gserviceaccount.com"
