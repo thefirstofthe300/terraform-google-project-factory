@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-output "instance_name" {
+output "auth_instance_name" {
   description = "The GCP instance name"
-  value       = "${google_compute_instance.main.name}"
+  value       = "${google_compute_instance.auth.name}"
 }
 
-output "instance_ip" {
+output "auth_instance_ip" {
   description = "The GCP instance external IP address"
-  value       = "${google_compute_instance.main.network_interface.0.access_config.0.nat_ip}"
+  value       = "${google_compute_instance.auth.network_interface.0.access_config.0.nat_ip}"
 }
 
-output "bucket" {
-  description = "The GCS bucket containing the Project Factory test artifacts"
-  value       = "${google_storage_bucket.main.name}"
-}
+//output "noauth_instance_name" {
+//  description = "The unauthorized GCP instance name"
+//  value       = "${google_compute_instance.noauth.name}"
+//}
+//
+//output "noauth_instance_ip" {
+//  description = "The unauthorized GCP instance external IP address"
+//  value       = "${google_compute_instance.noauth.network_interface.0.access_config.0.nat_ip}"
+//}
+

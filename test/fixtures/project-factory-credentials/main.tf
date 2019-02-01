@@ -32,8 +32,41 @@ locals {
   project_factory_archive = "${path.module}/files/project-factory.tar"
   remote_credentials_path = "../../../credentials.json"
   terraform_user          = "terraform"
+  ssh_pkey_path           = "${path.module}/files/sshkey"
+  ssh_pkey                = "${tls_private_key.main.private_key_pem}"
 }
 
 resource "google_service_account_key" "main" {
   service_account_id = "projects/${var.project_id}/serviceAccounts/${var.service_account_email}"
+}
+
+resource "tls_private_key" "main" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "local_file" "gce-keypair-pk" {
+  content  = "${tls_private_key.main.private_key_pem}"
+  filename = "${local.ssh_pkey_path}"
+}
+
+resource "null_resource" "archive" {
+  provisioner "local-exec" {
+    command     = "git archive -o ${local.project_factory_archive} --prefix project-factory/ HEAD"
+    working_dir = "${path.module}/../../.."
+  }
+
+  triggers {
+    uuid = "${uuid()}"
+  }
+}
+
+data "template_file" "project-factory-tfvars" {
+  template = "${file("${path.module}/templates/terraform.tfvars.tpl")}"
+
+  vars {
+    org_id           = "${var.org_id}"
+    billing_account  = "${var.billing_account}"
+    credentials_path = "${local.remote_credentials_path}"
+  }
 }
