@@ -24,13 +24,12 @@ output "auth_instance_ip" {
   value       = "${google_compute_instance.auth.network_interface.0.access_config.0.nat_ip}"
 }
 
-//output "noauth_instance_name" {
-//  description = "The unauthorized GCP instance name"
-//  value       = "${google_compute_instance.noauth.name}"
-//}
-//
-//output "noauth_instance_ip" {
-//  description = "The unauthorized GCP instance external IP address"
-//  value       = "${google_compute_instance.noauth.network_interface.0.access_config.0.nat_ip}"
-//}
+output "noauth_instance_name" {
+  description = "The unauthorized GCP instance name"
+  value       = "${google_compute_instance.noauth.name}"
+}
 
+output "noauth_instance_ip" {
+  description = "The unauthorized GCP instance external IP address"
+  value       = "${google_compute_instance.noauth.network_interface.0.access_config.0.nat_ip}"
+}
