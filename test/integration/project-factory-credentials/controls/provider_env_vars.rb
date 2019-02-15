@@ -26,9 +26,4 @@ control "provider_env_vars" do
     its('stderr') { should eq '' }
     its('stdout') { should include 'Plan: 6 to add, 0 to change, 0 to destroy' }
   end
-
-  describe bash("#{preamble} && terraform apply -auto-approve -no-color -input=false -var-file=../../../terraform.tfvars > apply.out 2>apply.err") do
-    its('exit_status') { should eq 0 }
-    its('stderr') { should eq '' }
-  end
 end
