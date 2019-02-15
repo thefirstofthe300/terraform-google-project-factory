@@ -58,6 +58,8 @@ suites:
           key_files:
             - ./test/fixtures/project-factory-credentials/files/sshkey
           user: terraform
+          shell: true
+          shell_options: '--login'
 
         - name: noauth-instance
           backend: ssh
@@ -68,3 +70,5 @@ suites:
           key_files:
             - ./test/fixtures/project-factory-credentials/files/sshkey
           user: terraform
+          shell: true
+          shell_options: '--login'

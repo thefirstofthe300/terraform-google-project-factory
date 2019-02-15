@@ -13,7 +13,7 @@
 # limitations under the License.
 
 control "provider_env_vars" do
-  preamble = "source /etc/profile.d/environment.sh && cd project-factory/examples/application_default_credentials && export GOOGLE_CREDENTIALS=\"$(cat ~terraform/credentials.json)\""
+  preamble = "cd project-factory/examples/application_default_credentials && export GOOGLE_CREDENTIALS=\"$(cat ~terraform/credentials.json)\""
 
   describe bash("#{preamble} && terraform init -no-color") do
     its('exit_status') { should eq 0 }

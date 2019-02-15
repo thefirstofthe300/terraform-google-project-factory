@@ -13,7 +13,7 @@
 # limitations under the License.
 
 control "application_default_credentials" do
-  preamble = "source /etc/profile.d/environment.sh && cd project-factory/examples/application_default_credentials"
+  preamble = "cd project-factory/examples/application_default_credentials"
 
   describe bash("#{preamble} && terraform init -no-color") do
     its('exit_status') { should eq 0 }

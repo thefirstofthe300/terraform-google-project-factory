@@ -13,7 +13,7 @@
 # limitations under the License.
 
 control "credentials_path" do
-  preamble = "source /etc/profile.d/environment.sh && cd project-factory/examples/simple_project"
+  preamble = "cd project-factory/examples/simple_project"
 
   describe bash("#{preamble} && terraform init -no-color") do
     its('exit_status') { should eq 0 }
